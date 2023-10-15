@@ -1,0 +1,22 @@
+/* colors*/
+
+:root{
+    --primary: purple;
+    --secondary: rgb(182, 74, 182);
+    --goodBorder: green;
+    --warning: rgb(255, 255, 69);
+    --bad: red;
+}
+
+nav {
+    background: var(--secondary);
+    border-bottom: 7px solid var(--primary);
+}
+
+nav a {
+    text-transform: uppercase;
+    font-size: 25px;
+    color: rgb(255, 255, 0);
+    font-weight: bold;
+}
+
