@@ -1,0 +1,14 @@
+{
+    "name": "Budget Yourself",
+    "short_name": "BY",
+    "description": "Manage budget $ Get espenses inline",
+    "start_url": "/index.html",
+    "scope": ".",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#FFE9D2",
+    "theme_color": "purple",
+    "dir": "ltr",
+    "lang": "en-US"
+    
+}
