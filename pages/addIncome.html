@@ -28,7 +28,14 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li><a href="/pages/login.html" class="waves-effect"><i class="material-icons">login</i>Login</a>
+        <li class="logged-out">
+            <a href="/pages/login.html" class="waves-effect modal-trigger" data-target="modal-login">Login</a>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li class="logged-in">
+            <a href="#" class="waves-effect" id="logout">Logout</a>
         </li>
         <li>
             <div class="divider"></div>
@@ -38,46 +45,45 @@
         <li><a href="/pages/saving.html" class="waves-effect">Your Savings</a></li>
     </ul>
     <!--income input-->
+  
     <div class="input-container">
         <h3>
             <u>Enter the Income:</u>
         </h3>
-        <form class="add-income">
+        <form class="add-income" id="income-form">
             <p>
-              <label for="type">
-                <input name="group1" type="radio"/>
-                <span>Employeement</span>
-              </label>
+                <label>
+                    <input name="group1" type="radio" value="Employment Income"/>
+                    <span>Employment</span>
+                </label>
             </p>
             <p>
-              <label for="type">
-                <input name="group1" type="radio" />
-                <span>Business</span>
-              </label>
+                <label>
+                    <input name="group1" type="radio" value="Business Income"/>
+                    <span>Business</span>
+                </label>
             </p>
-        </form>
-        
-            <form class="s12 m12 l12" action="">
-                
-                    <div class="input-field col s12">
-                        <input placeholder="Annual Income" id="yearlyIncome" type="text">
-                        <label for="yearlyIncome">Annual Income:</label>
-                        <div class="input-field col s12">
-                            <input placeholder="Estimated Monthly Income" id="estIncome" type="text">
-                            <label for="estIncome">Estimated Monthly Income:</label>
-                        </div>
-                    </div>
-                <div class="row">
-                    <div class="left-align" id="create-button">
-                        <a class="waves-effect waves-light btn purple"><i class="material-icons left">add</i>Add</a>
-                    </div>
+    
+            <div class="input-field col s12">
+                <input type="text" id="yearlyIncome" placeholder="Annual Income">
+                <label for="yearlyIncome">Annual Income:</label>
+                <div class="input-field col s12">
+                    <input type="text" id="estIncome" placeholder="Estimated Monthly Income">
+                    <label for="estIncome">Estimated Monthly Income:</label>
                 </div>
-            </form>
-       
+            </div>
+            <div class="row">
+                <div class="left-align" id="create-button">
+                    <button type="submit" class="waves-effect waves-light btn purple" id="addIncomeBtn">
+                        <i class="material-icons left">add</i>Add
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <script src="/js/app.js"></script>
     <script src="/js/ui.js"></script>
-
+    <script type="module" src="/js/incomeDB.js"></script>
 </body>
 </html>

@@ -25,15 +25,28 @@
     </nav>
 
     <ul id="side-menu" class="sidenav side-menu">
-        <li><a class="subheader">TASK MANAGER</a></li>
+        <li><a class="subheader">Budget Manager</a></li>
         <li><a href="/" class="waves-effect">Home</a></li>
         <li><a href="/pages/about.html" class="waves-effect">About</a></li>
+        <li><a href="/pages/blog.html" class="waves-effect">Blog</a></li>
         <li>
             <div class="divider"></div>
         </li>
-        <li><a href="/pages/contact.html" class="waves-effect"><i class="material-icons">mail_outline</i>Contact</a>
-
+        <li class="logged-out">
+            <a href="/pages/login.html" class="waves-effect modal-trigger" data-target="modal-login">Login</a>
         </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li class="logged-in">
+            <a href="#" class="waves-effect" id="logout">Logout</a>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="/pages/income.html" class="waves-effect">Income</a></li>
+        <li><a href="/pages/bills.html" class="waves-effect">Expenses</a></li>
+        <li><a href="/pages/saving.html" class="waves-effect">Your Savings</a></li>
     </ul>
 
     <!-- Content -->

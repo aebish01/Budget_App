@@ -1,29 +1,25 @@
+// Import the necessary functions from the Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
-  //import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-  //import firebase from "firebase/app";
- // import "firebase/firestore";
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAWhEMagw30n3aWvNZL4o8LX040g5Fiz8k",
-    authDomain: "budget-urself.f irebaseapp.com",
-    projectId: "budget-urself",
-    storageBucket: "budget-urself.appspot.com",
-    messagingSenderId: "791531012957",
-    appId: "1:791531012957:web:0e454962b583894af99eb4",
-    measurementId: "G-7ZJLE5TJ5P" 
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-/////////////////////////////////////////////////////////////////////////    
-    // Function to display income on the website
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAWhEMagw30n3aWvNZL4o8LX040g5Fiz8k",
+  authDomain: "budget-urself.f irebaseapp.com",
+  projectId: "budget-urself",
+  storageBucket: "budget-urself.appspot.com",
+  messagingSenderId: "791531012957",
+  appId: "1:791531012957:web:0e454962b583894af99eb4",
+  measurementId: "G-7ZJLE5TJ5P" 
+};
+
+// Initialize Firebase
+document.addEventListener("DOMContentLoaded", async function () {
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
   // Function to display income on the website
-async function displayIncome() {
+  async function displayIncome() {
     // Get a reference to the "income" collection
     const tasksCol = collection(db, "income");
   
@@ -31,41 +27,151 @@ async function displayIncome() {
       // Retrieve data from Firestore
       const taskSnapshot = await getDocs(tasksCol);
   
+      // Get the "income-cards" container
+      const incomeCardsContainer = document.getElementById("income-cards");
+  
+      // Clear existing content in the container
+      incomeCardsContainer.innerHTML = "";
+  
       // Iterate through the documents in the collection
       taskSnapshot.forEach((doc) => {
         // Access the data in each document
         const incomeData = doc.data();
   
-        const incomeType = incomeData.type ? "Employment Income" : "Business Income";
+        // Determine the income type based on the 'type' field
+        //const incomeType = incomeData.type ? "Employment Income" : "Business Income";
+  
         // Create HTML elements dynamically
         const card = document.createElement("div");
         card.className = "col s12 m6 l4";
         card.innerHTML = `
           <div class="card grey lighten-5">
             <div class="card-content grey-text darken-5">
-              <span class="card-title">${incomeType}</span>
+              <span class="card-title">${incomeData.type}</span>
               <p>Annual Income: ${incomeData.yearlyIncome}</p>
               <p>Estimated Monthly Income: ${incomeData.estIncome}</p>
             </div>
             <div class="card-action">
-              <button class="waves-effect waves-light btn purple"><i class="material-icons left">edit</i>Edit</button>
+              <button class="waves-effect waves-light btn purple edit-btn"><i class="material-icons left">edit</i>Edit</button>
               &emsp;&emsp;
-              <button class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>Delete</button>
+              <button class="waves-effect waves-light btn red delete-btn"><i class="material-icons left">delete</i>Delete</button>
             </div>
           </div>
         `;
-  
+        card.dataset.docId = doc.id;
+
+        // Add click event listener to the delete button
+        const deleteButton = card.querySelector('.delete-btn');
+        deleteButton.addEventListener('click', async (event) => {
+          try {
+            event.stopPropagation(); // Prevent card click event from triggering
+
+            // Get the document ID from the data attribute
+            const docId = card.dataset.docId;
+
+            // Call the delete function with the document ID
+            await deleteIncome(docId);
+          } catch (error) {
+            console.error("Error handling delete button click: ", error);
+          }
+        });
+
+        // Add click event listener to the edit button
+        const editButton = card.querySelector('.edit-btn');
+        editButton.addEventListener('click', async (event) => {
+          try {
+            event.stopPropagation(); // Prevent card click event from triggering
+
+            // Get the document ID from the data attribute
+            const docId = card.dataset.docId;
+
+            // Get the updated values (you can modify this part based on your UI)
+            const updatedType = prompt("Enter updated type (Employment/Business):");
+            const updatedAnnualIncome = prompt("Enter updated annual income:");
+            const updatedEstimatedMonthlyIncome = prompt("Enter updated estimated monthly income:");
+
+            // Call the update function with the document ID and updated values
+            await updateIncome(docId, {
+              type: updatedType,
+              yearlyIncome: updatedAnnualIncome,
+              estIncome: updatedEstimatedMonthlyIncome
+            });
+          } catch (error) {
+            console.error("Error handling edit button click: ", error);
+          }
+        });
+
+        // Add a margin to the bottom of the card for spacing
+        card.style.marginBottom = '15px';
+
         // Append the card to the "income cards" section
-        document.getElementById("income-cards").appendChild(card);
+        incomeCardsContainer.appendChild(card);
       });
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   }
-  
+
   // Call the displayIncome function to initially load data
   displayIncome();
-  //////////////////////////////////////////////////////////////////
-  //bills 
 
-  //savings
+  // Event listener for the "Add" button
+  document.getElementById("income-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    console.log("Form submitted");
+    // Get values from the form
+    const type = document.querySelector('input[name="group1"]:checked').value;
+    const annualIncome = document.getElementById("yearlyIncome").value;
+    const estimatedMonthlyIncome = document.getElementById("estIncome").value;
+
+    // Add income to Firebase
+    addIncome(type, annualIncome, estimatedMonthlyIncome);
+  });
+
+  async function addIncome(type, annualIncome, estimatedMonthlyIncome) {
+    console.log("Adding income");
+    const incomeCollection = collection(db, "income");
+
+    try {
+      // Add a new document with the provided data
+      await addDoc(incomeCollection, {
+        type: type,
+        yearlyIncome: annualIncome,
+        estIncome: estimatedMonthlyIncome
+      });
+
+      // After adding income, refresh the display
+      displayIncome();
+    } catch (error) {
+      console.error("Error adding income: ", error);
+    }
+  }
+
+  async function deleteIncome(docId) {
+    const incomeCollection = collection(db, "income");
+  
+    try {
+      // Delete the document with the specified ID
+      await deleteDoc(doc(incomeCollection, docId));
+  
+      // After deleting income, refresh the display
+      displayIncome();
+    } catch (error) {
+      console.error("Error deleting income: ", error);
+    }
+  }
+
+  async function updateIncome(docId, updatedData) {
+    const incomeCollection = collection(db, "income");
+
+    try {
+      // Update the document with the specified ID and updated data
+      await updateDoc(doc(incomeCollection, docId), updatedData);
+
+      // After updating income, refresh the display
+      displayIncome();
+    } catch (error) {
+      console.error("Error updating income: ", error);
+    }
+  }
+});

@@ -1,5 +1,5 @@
-const staticCache = "Static-cache-v1";
-const dynamicCache = "Dynamic-cache-v1";
+const staticCache = "Static-cache-v3";
+const dynamicCache = "Dynamic-cache-v3";
 
 
 const assets = [
@@ -42,10 +42,7 @@ const limitCacheSize = (name, size) => {
     event.waitUntil(
       caches.open(staticCache).then(function (cache) {
         console.log("SW: Precaching App shell");
-        cache.addAll(assets.map(url => new Request(url, { mode: 'no-cors' })))
-            .then(() => console.log('Assets cached successfully'))
-            .catch(error => console.error('Cache failed', error));
-
+        return cache.addAll(assets);
       })
     );
   });

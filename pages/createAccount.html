@@ -28,7 +28,14 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li><a href="/pages/login.html" class="waves-effect"><i class="material-icons">login</i>Login</a>
+        <li class="logged-out">
+            <a href="/pages/login.html" class="waves-effect modal-trigger" data-target="modal-login">Login</a>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li class="logged-in">
+            <a href="#" class="waves-effect" id="logout">Logout</a>
         </li>
         <li>
             <div class="divider"></div>
@@ -43,36 +50,34 @@
             <u>Create Account:</u>
         </h3>
         
-            <form class="s12 m12 l12" action="">
+        <form class="s12 m12 l12" id="signup-form" action="">
                 
-                    <div class="input-field col s12">
-                        <input placeholder="First Name" id="fName" type="text">
-                        <label for="fName">First Name:</label>
-                        <div class="input-field col s12">
-                            <input placeholder="Last Name" id="lName" type="text">
-                            <label for="lName">Last Name:</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <input placeholder="E-mail" id="Email" type="text">
-                            <label for="Email">Email:</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <input placeholder="Passwrod" id="password" type="text">
-                            <label for="password">Password:</label>
-                        </div>
-                    </div>
-                
-                <div class="row">
-                    <div class="left-align" id="create-button">
-                        <a class="waves-effect waves-light btn purple"><i class="material-icons left">create</i>Create Account</a>
-                    </div>
+            <div class="input-field col s12">
+                <div class="input-field col s12">
+                    <input placeholder="E-mail" id="Email" type="text">
+                    <label for="Email">Email:</label>
                 </div>
-            </form>
+                <div class="input-field col s12">
+                    <input placeholder="Password" id="password" type="text">
+                    <label for="password">Password:</label>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="left-align" id="create-button">
+                    <button type="submit" class="waves-effect waves-light btn purple" id="createAcctBtn">
+                        <i class="material-icons left">create</i>Create Account
+                    </button>
+                </div>
+            </div>
+        </form>
         
     </div>
 
     <script src="/js/app.js"></script>
     <script src="/js/ui.js"></script>
+    <script type="module" src="/js/auth.js"></script>
+
 
 </body>
 </html>
