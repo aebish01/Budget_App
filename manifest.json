@@ -1,7 +1,7 @@
 {
     "name": "Budget Yourself",
     "short_name": "BY",
-    "description": "Manage budget $ Get espenses inline",
+    "description": "Manage budget $ Get expenses inline",
     "start_url": "/index.html",
     "scope": ".",
     "display": "standalone",
@@ -9,6 +9,22 @@
     "background_color": "#FFE9D2",
     "theme_color": "purple",
     "dir": "ltr",
-    "lang": "en-US"
-    
-}
+    "lang": "en-US",
+    "icons": [
+      {
+        "src": "/images/dollarbill.png",
+        "sizes": "72x72", 
+        "type": "image/png"
+      },
+      {
+        "src": "/images/dollarbill.png",
+        "sizes": "144x144", 
+        "type": "image/png"
+      },
+      {
+        "src": "/images/dollarbill.png",
+        "sizes": "192x192", 
+        "type": "image/png"
+      }
+    ]
+  }
