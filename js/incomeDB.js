@@ -1,17 +1,17 @@
 // Import the necessary functions from the Firebase SDK
 import app from "./firebaseConfig.js";
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
-import { auth, authStateChanged, login, logout, createAccount } from "./auth.js";
-
+import { auth, onAuthStateChanged, authStateChanged, login, logout, createAccount } from "./auth.js";
+//console.log('User available:', user);
 // Initialize Firebase
 document.addEventListener("DOMContentLoaded", async function () {
   const db = getFirestore(app);
-
+ 
   // Function to display income on the website
   async function displayIncome() {
     authStateChanged(async (user) => {
       console.log('User available:', user);
-      if (!user) {
+      if (!user) { 
         console.log('User not authenticated. Income data will not be displayed.');
         return;
       }

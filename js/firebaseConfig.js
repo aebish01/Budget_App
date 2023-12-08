@@ -1,10 +1,9 @@
-// firebaseInit.js (initialize Firebase here)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js';
+
 
 const firebaseConfig = {
-  // Your Firebase configuration
   apiKey: "AIzaSyAWhEMagw30n3aWvNZL4o8LX040g5Fiz8k",
-  authDomain: "budget-urself.f irebaseapp.com",
+  authDomain: "budget-urself.firebaseapp.com",
   projectId: "budget-urself",
   storageBucket: "budget-urself.appspot.com",
   messagingSenderId: "791531012957",
@@ -13,5 +12,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+//const messaging = getMessaging(app);
 
 export default app;

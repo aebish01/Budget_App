@@ -1,4 +1,3 @@
-// Cache names for static and dynamic caches
 const staticCache = "Static-cache-v4";
 const dynamicCache = "Dynamic-cache-v4";
 
